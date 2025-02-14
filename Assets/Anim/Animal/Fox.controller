@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Deer
+  m_Name: Fox
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -30,7 +30,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Run
-  m_Speed: 0.66
+  m_Speed: -0.66
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -42,7 +42,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 0bafe5878c551304584fd4a9e8b25ce0, type: 2}
+  m_Motion: {fileID: 7400000, guid: ba22b521aef7a6a449bcfef0ed7634d5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
