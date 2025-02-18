@@ -4919,13 +4919,14 @@ GameObject:
   m_Component:
   - component: {fileID: 754066472}
   - component: {fileID: 754066471}
+  - component: {fileID: 754066473}
   - component: {fileID: 754066470}
   - component: {fileID: 754066469}
   - component: {fileID: 754066468}
   - component: {fileID: 754066467}
   m_Layer: 0
   m_Name: Racoon
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5079,6 +5080,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &754066473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754066466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3ea8042754fda45a8232d8c3d1ec50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &851446491
 GameObject:
   m_ObjectHideFlags: 0
@@ -5089,13 +5102,14 @@ GameObject:
   m_Component:
   - component: {fileID: 851446497}
   - component: {fileID: 851446496}
+  - component: {fileID: 851446498}
   - component: {fileID: 851446495}
   - component: {fileID: 851446494}
   - component: {fileID: 851446493}
   - component: {fileID: 851446492}
   m_Layer: 0
   m_Name: Tiger
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5249,6 +5263,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &851446498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851446491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3ea8042754fda45a8232d8c3d1ec50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1032485421
 GameObject:
   m_ObjectHideFlags: 0
@@ -5352,13 +5378,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1155911397}
   - component: {fileID: 1155911396}
+  - component: {fileID: 1155911401}
   - component: {fileID: 1155911395}
   - component: {fileID: 1155911399}
   - component: {fileID: 1155911398}
   - component: {fileID: 1155911400}
   m_Layer: 0
   m_Name: Deer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5512,6 +5539,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   target: {fileID: 1790444852}
+--- !u!114 &1155911401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155911394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3ea8042754fda45a8232d8c3d1ec50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1161380180
 GameObject:
   m_ObjectHideFlags: 0
@@ -9763,13 +9802,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1221530480}
   - component: {fileID: 1221530479}
+  - component: {fileID: 1221530481}
   - component: {fileID: 1221530478}
   - component: {fileID: 1221530477}
   - component: {fileID: 1221530476}
   - component: {fileID: 1221530475}
   m_Layer: 0
   m_Name: Squrriel
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9923,6 +9963,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1221530481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221530474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3ea8042754fda45a8232d8c3d1ec50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1287600948
 GameObject:
   m_ObjectHideFlags: 0
@@ -14174,13 +14226,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1526038987}
   - component: {fileID: 1526038986}
+  - component: {fileID: 1526038988}
   - component: {fileID: 1526038985}
   - component: {fileID: 1526038984}
   - component: {fileID: 1526038983}
   - component: {fileID: 1526038982}
   m_Layer: 0
   m_Name: BossDeer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14334,6 +14387,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1526038988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526038981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3ea8042754fda45a8232d8c3d1ec50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1585978297
 GameObject:
   m_ObjectHideFlags: 0
@@ -18585,13 +18650,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1663795614}
   - component: {fileID: 1663795613}
+  - component: {fileID: 1663795615}
   - component: {fileID: 1663795612}
   - component: {fileID: 1663795611}
   - component: {fileID: 1663795610}
   - component: {fileID: 1663795609}
   m_Layer: 0
   m_Name: Fox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18745,6 +18811,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1663795615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663795608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3ea8042754fda45a8232d8c3d1ec50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1702806109
 GameObject:
   m_ObjectHideFlags: 0
@@ -18955,7 +19033,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.011832148}
-  m_Size: {x: 0.45, y: 0.96183217}
+  m_Size: {x: 5, y: 12}
   m_Direction: 0
 --- !u!114 &1790444856
 MonoBehaviour:

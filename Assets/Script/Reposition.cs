@@ -1,80 +1,83 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Security.Cryptography;
 using UnityEngine;
 
 /* 
 1) 게임상 기능  
- 타일맵 무한 스크롤 / 자동 확장
+   - 타일맵 무한 스크롤  
+   - 자동 확장  
 
-2) 주요 로직 
-"Area" 태그를 가진 영역에서 객체가 이탈할 때, 
-플레이어의 위치와 입력 방향을 기반으로 
-"Ground" 태그를 가진 객체를 
-적절한 방향으로 재배치(이동)하는 역할을 합니다.
+2) 주요 로직  
+   - "Area" 태그 영역 이탈 감지  
+   - 플레이어 위치 & 입력 방향 기준  
+   - "Ground" 태그 객체의 위치 재배치  
+   - "Enemy" 태그 객체의 위치 재배치 (멀어진 몹을 다시 플레이어 근처로 이동)  
 
 3) 단계별 전개 흐름  
-1. 트리거 이탈 감지  
-    Collider가 "Area" 태그를 가진 트리거 영역을 벗어나면 OnTriggerExit2D 이벤트가 발생합니다.
-2. 태그 확인  
-    이탈한 충돌체가 "Area" 태그가 아닐 경우 함수가 종료됩니다.
-3. 위치 차 계산  
-    플레이어의 위치와 현재 객체의 위치 차이를 X축(diffX)와 Y축(diffY)로 계산합니다.
-4. 입력 방향 부호 결정  
-    플레이어의 입력 벡터를 기반으로 X, Y 방향의 부호(dirX, dirY)를 결정합니다.
-5. 객체 태그에 따른 분기 처리  
-    Ground 태그의 경우:  
-      diffX와 diffY를 비교하여, X축 차이가 크면 X 방향, Y축 차이가 크면 Y 방향으로 일정 거리(40) 이동시켜 재배치합니다.  
-    Enemy 태그의 경우:  
-      추가 처리(현재 미구현)  
+   1. "Area" 태그 영역을 벗어난 객체 감지  
+   2. 태그 확인 후, "Area"가 아니면 종료  
+   3. 플레이어 위치와 객체 위치 차이 계산  
+   4. 입력 방향 분석하여 이동 방향 결정  
+   5. 객체 재배치 수행  
+      - "Ground" → X, Y 방향 우선 이동  
+      - "Enemy" → 플레이어 근처에 다시 배치 (랜덤 위치 추가)  
 */
 
 public class Reposition : MonoBehaviour
 {
-    // 충돌체 이탈 이벤트
-    // 충돌체 이탈 이벤트
+    Collider2D coll;
+
+    void Awake()
+    {
+        // 충돌체 저장
+        coll = GetComponent<Collider2D>();
+    }
+
+    // "Area" 밖으로 나갔을 때 실행됨
     void OnTriggerExit2D(Collider2D collision)
     {
-        // 태그 확인: Area
+        // "Area" 태그 확인 (해당 영역이 아닐 경우 종료)
         if (!collision.CompareTag("Area"))
             return;
 
-        // 플레이어 위치
-        Vector3 playerPos = GameManager.instance.player.transform.position;
-        // 현재 객체 위치
-        Vector3 myPos = transform.position;
-        // X 축 차이
-        float diffX = Mathf.Abs(playerPos.x - myPos.x);
-        // Y 축 차이
-        float diffY = Mathf.Abs(playerPos.y - myPos.y);
+        // 위치 정보
+        Vector3 playerPos = GameManager.instance.player.transform.position;  // 플레이어 위치
+        Vector3 myPos = transform.position;  // 현재 객체 위치
 
-        // 플레이어 입력 벡터
-        Vector3 playerDir = GameManager.instance.player.inputVec;
-        // X 방향 부호
-        float dirX = playerDir.x < 0 ? -1 : 1;
-        // Y 방향 부호
-        float dirY = playerDir.y < 0 ? -1 : 1;
+        // 위치 차이 계산
+        float diffX = Mathf.Abs(playerPos.x - myPos.x);  // X축 차이
+        float diffY = Mathf.Abs(playerPos.y - myPos.y);  // Y축 차이
 
-        // 태그 분기
+        // 입력 방향 분석
+        Vector3 playerDir = GameManager.instance.player.inputVec;  // 입력 벡터
+        float dirX = playerDir.x < 0 ? -1 : 1;  // X 방향 부호
+        float dirY = playerDir.y < 0 ? -1 : 1;  // Y 방향 부호
+
+        // 객체 재배치 분기
         switch (transform.tag)
         {
             case "Ground":
-                // 바닥: X 우세
+                // 바닥 재배치 (X, Y 축 차이 비교)
                 if (diffX > diffY)
                 {
-                    // X 방향 이동
-                    transform.Translate(Vector3.right * dirX * 40);
+                    transform.Translate(Vector3.right * dirX * 40); // X 방향 이동
                 }
-                // 바닥: Y 우세
                 else if (diffX < diffY)
                 {
-                    // Y 방향 이동
-                    transform.Translate(Vector3.up * dirY * 40);
+                    transform.Translate(Vector3.up * dirY * 40); // Y 방향 이동
                 }
                 break;
+
             case "Enemy":
-                // 적 태그
+                // 플레이어와 멀어진 몹 재배치 (근처로 이동)
+                if (coll.enabled)
+                {
+                    transform.position = playerPos + playerDir * 20 + new Vector3(
+                        UnityEngine.Random.Range(-3f, 3f),  // X축 랜덤 오프셋
+                        UnityEngine.Random.Range(-3f, 3f),  // Y축 랜덤 오프셋
+                        0f);
+                }
                 break;
         }
     }
