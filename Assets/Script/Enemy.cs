@@ -5,77 +5,109 @@ using UnityEngine;
 
 /* 
 1) 게임상 기능  
-   - 적(Enemy) 오브젝트가 지정된 대상(target)을 향해 자동으로 이동합니다.
+   - 적(Enemy) 오브젝트, 지정 대상(target)으로 자동 이동
 
 2) 주요 로직 
-   - Rigidbody2D를 활용하여 물리 기반의 이동을 수행합니다.
-   - FixedUpdate()에서 목표(target)와 현재 위치 간의 방향 벡터를 계산해, 
-     적이 일정 속도로 대상에게 접근하도록 합니다.
-   - rigid.velocity를 0으로 설정하여, 불필요한 잔여 물리 효과를 제거합니다.
-
-3) 단계별 전개 흐름  
-   1. 컴포넌트 초기화  
-      - Awake()에서 Rigidbody2D와 SpriteRenderer 컴포넌트를 가져와 초기화합니다.
-   2. 이동 계산 및 적용  
-      - FixedUpdate()에서 대상의 위치와 적의 위치 차이로부터 방향 벡터를 계산합니다.
-      - 방향 벡터를 정규화한 후, 이동할 벡터를 속도와 Time.fixedDeltaTime을 곱해 산출합니다.
-      - Rigidbody2D.MovePosition()을 사용해 새로운 위치로 이동시키며,
-        이후 rigid.velocity를 0으로 초기화해 물리적 잔여 효과를 제거합니다.
+   - Rigidbody2D 활용, 물리 기반 이동
+   - FixedUpdate(): 목표(target)와 현재 위치, 방향 벡터 계산 → 일정 속도, 대상 접근
+   - rigid.velocity 0 할당, 불필요한 잔여 물리 효과 제거
 */
 
 public class Enemy : MonoBehaviour
 {
-    // 적의 이동 속도
+    // 적 이동 속도
     public float speed;
-    // 적이 추적할 목표의 Rigidbody2D 컴포넌트 (예: 플레이어)
+    // 현재 체력, 최대 체력
+    public float health;
+    public float maxHealth;
+    // 추적 대상의 Rigidbody2D (예: 플레이어)
     public Rigidbody2D target;
 
-    // 적의 생존 여부 (현재 사용되지 않으나 향후 기능 확장을 위해 선언됨)
+    // 생존 여부 (향후 기능 확장용)
     bool isLive = true;
 
-    // 물리 연산을 위한 Rigidbody2D 컴포넌트
+    // 물리 연산용 Rigidbody2D
     Rigidbody2D rigid;
-    // 적의 시각적 표현을 위한 SpriteRenderer 컴포넌트
+    // 시각 표현용 SpriteRenderer
     SpriteRenderer spriter;
+    // 애니메이션 제어용 Animator (자체 컴포넌트 자동 참조)
+    Animator anim;
 
-    // 오브젝트가 활성화될 때 호출되어 필요한 컴포넌트를 초기화합니다.
+    // Awake() - 오브젝트 활성화 시, 컴포넌트 초기화
     void Awake()
     {
-        // 현재 오브젝트의 Rigidbody2D 컴포넌트를 가져옵니다.
+        // 현재 오브젝트, Rigidbody2D 컴포넌트 획득
         rigid = GetComponent<Rigidbody2D>();
-        // 현재 오브젝트의 SpriteRenderer 컴포넌트를 가져옵니다.
+        // 현재 오브젝트, SpriteRenderer 컴포넌트 획득
         spriter = GetComponent<SpriteRenderer>();
+        // 현재 오브젝트, Animator 컴포넌트 획득 (애니메이션 컨트롤러 자동 참조)
+        anim = GetComponent<Animator>();
     }
 
-    // FixedUpdate()는 일정한 시간 간격으로 호출되어 물리 연산에 적합합니다.
+    // FixedUpdate() - 일정 시간 간격, 물리 연산 용도
     void FixedUpdate()
     {
         if (!isLive)
-            return;  
+            return;
 
-
-        // 목표(target)와 현재 위치 사이의 방향 벡터를 계산합니다.
+        // 목표(target)와 현재 위치, 방향 벡터 계산
         Vector2 dirVec = target.position - rigid.position;
-        // 방향 벡터를 정규화한 후, 이동 속도와 고정 델타타임을 곱하여 이동할 벡터를 계산합니다.
+        // 방향 벡터 정규화, 속도 및 Time.fixedDeltaTime 곱 → 이동 벡터 산출
         Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
-        // 계산된 이동 벡터를 현재 위치에 더해, Rigidbody2D를 통해 새로운 위치로 이동시킵니다.
+        // 이동 벡터 합산, Rigidbody2D.MovePosition() 사용
         rigid.MovePosition(rigid.position + nextVec);
-        // 이전 프레임의 물리 효과가 누적되지 않도록 속도를 0으로 초기화합니다.
+        // 이전 물리 효과 누적 방지, rigid.velocity 0 할당
         rigid.velocity = Vector2.zero;
     }
 
+    // LateUpdate() - 모든 Update() 후, 시각 보정 용도
     void LateUpdate()
     {
         if (!isLive)
             return;
 
-        // 목표(target)와 현재 위치를 비교하여 뒤집어야 할지 결정합니다.
+        // 목표(target) 위치 비교, 스프라이트 좌우 반전 결정
         bool shouldFlip = target.position.x > rigid.position.x;
 
-        // Enemy 오브젝트와 모든 자식 오브젝트에 있는 SpriteRenderer 컴포넌트를 가져와 flipX 값을 설정합니다.
+        // Enemy 및 자식 오브젝트, SpriteRenderer 컴포넌트 검색 → flipX 값 할당
         foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
         {
             sr.flipX = shouldFlip;
         }
+    }
+
+    // OnEnable() - 오브젝트 활성화 시
+    // GameManager의 플레이어 Rigidbody2D 할당, 적 상태 및 체력 초기화
+    void OnEnable()
+    {
+        target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+        // 생존 상태 활성화
+        isLive = true;
+        // 체력, 최대 체력 할당
+        health = maxHealth;
+    }
+
+    /*
+    [data 흐름도]
+    data.speed  (수동 입력) → Enemy.speed 결정
+    data.health (수동 입력) → Enemy.maxHealth 결정
+    data.health (수동 입력) → Enemy.health 결정
+    (애니메이션 컨트롤러는 Enemy 오브젝트 자체의 Animator 컴포넌트 자동 참조)
+    */
+
+    // Init() - SpawnData 기반, 적 속성(속도, 체력) 초기화
+    // 적 생성 시, 외부 설정 적용 용도
+    public void Init(SpawnData data)
+    {
+        // 애니메이션 컨트롤러 자동 참조하므로, 별도 할당 없음
+
+        // SpawnData.speed: 이동 속도 결정 → Enemy.speed 대입함.
+        speed = data.speed;
+
+        // SpawnData.health: 최대 체력 결정 → Enemy.maxHealth 대입함.
+        maxHealth = data.health;
+
+        // SpawnData.health: 초기 체력 결정 → Enemy.health 대입함.
+        health = data.health;
     }
 }
