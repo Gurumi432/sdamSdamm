@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
+
 /* 
 1) 게임상 기능  
    - 적(Enemy) 오브젝트, 지정 대상(target)으로 자동 이동
@@ -15,11 +16,15 @@ public class Enemy : MonoBehaviour
     // 현재 체력, 최대 체력
     public float health;
     public float maxHealth;
+
+    public RuntimeAnimatorController[] animCon;
     // 추적 대상의 Rigidbody2D (예: 플레이어)
     public Rigidbody2D target;
 
     // 생존 여부 (향후 기능 확장용)
     bool isLive = true;
+
+
 
     // 물리 연산용 Rigidbody2D
     Rigidbody2D rigid;
@@ -27,6 +32,7 @@ public class Enemy : MonoBehaviour
     SpriteRenderer spriter;
     // 애니메이션 제어용 Animator (자체 컴포넌트 자동 참조)
     Animator anim;
+
 
     // Awake() - 오브젝트 활성화 시, 컴포넌트 초기화
     void Awake()
@@ -72,10 +78,12 @@ public class Enemy : MonoBehaviour
     // Init() - SpawnData 기반, 적 속성 초기화
     public void Init(SpawnData data)
     {
+        anim.runtimeAnimatorController = animCon[data.spriteType];
         speed = data.speed;
         maxHealth = data.health;
         health = data.health;
     }
+
 
     // 총알과 충돌 시 체력 감소 및 디버그 로그 출력
     void OnTriggerEnter2D(Collider2D collision)
@@ -85,7 +93,9 @@ public class Enemy : MonoBehaviour
 
         health -= collision.GetComponent<Bullet>().damage;
 
-        if (health <= 0)
+        if (health > 0) { }
+            // .. Live, Hit Action
+        else
             Dead();
     }
 

@@ -184,6 +184,8 @@ MonoBehaviour:
   speed: 0
   health: 0
   maxHealth: 0
+  animCon:
+  - {fileID: 9100000, guid: 6e90d05ccb3f7204dba725295a648e54, type: 2}
   target: {fileID: 0}
 --- !u!1 &5344458357375963041
 GameObject:
