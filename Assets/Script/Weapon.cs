@@ -100,18 +100,27 @@ public class Weapon : MonoBehaviour
     void Batch()
     {
         // count만큼 반복하여 Bullet 생성
-        for (int i = 0; i < count; i++)
+        for (int index = 0; index < count; index++)
         {
             // 풀에서 prefab Id에 해당하는 오브젝트 가져오기
-            Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
-            bullet.parent = transform;
+            Transform bullet;
 
-            // Bullet의 위치를 부모의 위치로 고정
-            bullet.position = transform.position;
+            if (index < transform.childCount)
+            {
+                bullet = transform.GetChild(index); // 수정된 부분
+            }
+            else
+            {
+                bullet = GameManager.instance.pool.Get(prefabId).transform;
+                bullet.parent = transform;
+            }
+
+            bullet.localPosition = Vector3.zero;
+            bullet.localRotation = Quaternion.identity;
 
             // 회전 적용: bullet이 원 궤도를 그리도록
-            Vector3 rotVec = Vector3.forward * 360 * i / count;
-            bullet.Rotate(rotVec, Space.Self);
+            Vector3 rotVec = Vector3.forward * 360 * index / count;
+            bullet.Rotate(rotVec);
             bullet.Translate(bullet.up * 1f, Space.World);
 
             bullet.GetComponent<Bullet>().Init(damage, -1); // -1은 Infinity Per(무한), 근접무기라 무조건 적을 관통한다는 뜻 
