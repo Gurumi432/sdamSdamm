@@ -65,6 +65,23 @@ public class Weapon : MonoBehaviour
                 // 그 외 id의 경우 별도 처리 없음
                 break;
         }
+
+        /// .. Test Code..
+        if (Input.GetButtonDown("Jump"))
+        {
+            LevelUp(20, 5);
+        }
+    }
+
+    public void LevelUp(float damage, int count)
+    {
+        this.damage = damage;
+        this.count += count;
+
+        if (id == 0)
+        {
+            Batch();
+        }
     }
 
     // 무기 초기화: id에 따른 초기 설정 및 Bullet 생성 처리 호출
