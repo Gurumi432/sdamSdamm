@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading;
 using UnityEngine;
 
@@ -32,6 +33,7 @@ public class Enemy : MonoBehaviour
     SpriteRenderer spriter;
     // 애니메이션 제어용 Animator (자체 컴포넌트 자동 참조)
     Animator anim;
+    WaitForFixedUpdate wait;
 
 
     // Awake() - 오브젝트 활성화 시, 컴포넌트 초기화
@@ -40,6 +42,7 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        wait = new WaitForFixedUpdate();
     }
 
     // FixedUpdate() - 일정 시간 간격, 물리 연산 용도
@@ -85,7 +88,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // 총알과 충돌 시 체력 감소 및 디버그 로그 출력
+    // 총알과 충돌 시 체력 감소
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Bullet"))
@@ -93,10 +96,18 @@ public class Enemy : MonoBehaviour
 
         health -= collision.GetComponent<Bullet>().damage;
 
-        if (health > 0) { }
-            // .. Live, Hit Action
+        if (health > 0)
+        {
+            anim.SetTrigger("Hit");
+        }
         else
             Dead();
+    }
+
+    IEnumerator KnockBack()
+    {
+        yield return wait;
+        Vector3 playerPos = GameManager.instance.player.transform.position;
     }
 
     // 적 제거 처리
