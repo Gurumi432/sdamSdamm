@@ -5013,7 +5013,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   prefabId: 7
-  damage: 10
+  damage: 3
   count: 0
   speed: 0
   lockChildRotation: 0
@@ -18641,19 +18641,27 @@ MonoBehaviour:
   spawnPoint: []
   spawnData:
   - spriteType: 0
-    spawnTime: 0.7
+    spawnTime: 0.5
     health: 10
     speed: 1.5
   - spriteType: 0
-    spawnTime: 0.2
-    health: 10
-    speed: 2.5
-  - spriteType: 1
-    spawnTime: 0.7
+    spawnTime: 0.5
     health: 10
     speed: 1.5
-  - spriteType: 2
-    spawnTime: 0.7
+  - spriteType: 0
+    spawnTime: 0.5
+    health: 10
+    speed: 1.5
+  - spriteType: 0
+    spawnTime: 0.5
+    health: 10
+    speed: 1.5
+  - spriteType: 0
+    spawnTime: 0.5
+    health: 10
+    speed: 1.5
+  - spriteType: 0
+    spawnTime: 0.5
     health: 10
     speed: 1.5
 --- !u!1 &2035911753
@@ -18871,7 +18879,7 @@ MonoBehaviour:
   - {fileID: 1830696681532642225, guid: 0d893daa494eeac44a8a36451a8616a2, type: 3}
   - {fileID: 5221636575607265448, guid: 66ca361ff254ef4408d3376e8ba9da3f, type: 3}
   - {fileID: 8768041686450900198, guid: ca28a72e02576e4468526518d1f54f3d, type: 3}
-  - {fileID: 2747559415962926592, guid: 3786fb03e53f5af458f587d660ed403c, type: 3}
+  - {fileID: 1150354109330645889, guid: 5113bea744c7ed54c9de1787bfc522a2, type: 3}
 --- !u!4 &2118148389
 Transform:
   m_ObjectHideFlags: 0
