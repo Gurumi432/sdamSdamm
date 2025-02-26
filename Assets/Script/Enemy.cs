@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
 
         if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit") )
             return;
-        /*
+
         if (!isKnockBack)
         {
             // 추적 대상과의 방향 벡터 계산 (목표 위치 - 현재 위치)
@@ -65,7 +65,7 @@ public class Enemy : MonoBehaviour
             rigid.MovePosition(rigid.position + nextVec);
             // 이동 후, 기존의 속도값을 0으로 초기화하여 누적되지 않도록 함
             rigid.velocity = Vector2.zero;
-        }*/
+        }
     }
 
     // LateUpdate() - 모든 Update() 호출 후에 실행, 스프라이트의 방향(좌우 반전) 보정에 사용
@@ -120,15 +120,15 @@ public class Enemy : MonoBehaviour
         // 체력이 남아있으면 Hit 애니메이션 재생, 체력이 0 이하이면 Dead() 호출하여 적 제거 처리
         if (health > 0)
         {
-            //anim.SetTrigger("Hit");
-            //StartCoroutine(KnockBack());
+            anim.SetTrigger("Hit");
+            StartCoroutine(KnockBack());
         }
         else
             Dead();
     }
 
     // KnockBack() - 총알 충돌 후 넉백 효과를 주기 위한 코루틴, IEnumerator: 코루틴을 구현할 때 사용되는 반환 타입(또는 도구)
-    /*IEnumerator KnockBack()
+    IEnumerator KnockBack()
     {
         // 넉백 시작 플래그 설정
         isKnockBack = true;
@@ -142,7 +142,7 @@ public class Enemy : MonoBehaviour
         // 넉백 효과 지속 시간 (예: 0.2초 후에 다시 이동 제어)
         yield return new WaitForSeconds(0.2f);
         isKnockBack = false;
-    }*/
+    }
 
     // Dead() - 적이 죽었을 때 호출, 오브젝트를 비활성화하여 제거 처리
     void Dead()
