@@ -14,6 +14,8 @@ public class Bullet : MonoBehaviour
     // Rigidbody2D 컴포넌트를 저장할 변수 (물리 연산에 사용)
     Rigidbody2D rigid;
 
+    public BoxCollider2D Area;
+
     // Awake 함수: 스크립트가 활성화될 때 한 번 호출됩니다.
     void Awake()
     {
@@ -43,12 +45,23 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+
+
         if (!collision.CompareTag("Enemy") || per == -1)
             return;
 
         per--;
 
         if (per == -1)
+        {
+            rigid.velocity = Vector2.zero;
+            gameObject.SetActive(false);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Area"))
         {
             rigid.velocity = Vector2.zero;
             gameObject.SetActive(false);

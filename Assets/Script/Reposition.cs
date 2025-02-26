@@ -70,7 +70,7 @@ public class Reposition : MonoBehaviour
                 // 플레이어와 멀어진 몹 재배치 (근처로 이동)
                 if (coll.enabled)
                 {
-                    transform.position = playerPos + playerDir * 20 + new Vector3(
+                    transform.position = playerPos + playerDir * 10 + new Vector3(
                         UnityEngine.Random.Range(-3f, 3f),  // X축 랜덤 오프셋
                         UnityEngine.Random.Range(-3f, 3f),  // Y축 랜덤 오프셋
                         0f);

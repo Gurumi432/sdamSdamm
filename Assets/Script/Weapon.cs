@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour
     // 생성할 Bullet(총알) 개수
     public int count;
     // 회전 속도 (무기 혹은 오브젝트의 회전 속도)
-    public float speed;
+    public float ReloadSpeed;
     // 인스펙터에서 자식 Bullet의 회전 잠금 여부 선택
     // true이면 자식 Bullet이 월드 회전(0,0,0)으로 고정되어 원형 배치 시 회전 효과 유지
     public bool lockChildRotation = true;
@@ -66,7 +66,7 @@ public class Weapon : MonoBehaviour
             case 0:
                 // 부모 오브젝트를 회전시킵니다.
                 // Vector3.back 방향으로 회전하며, speed와 프레임의 델타타임을 곱해 부드러운 회전을 구현합니다.
-                transform.Rotate(Vector3.back * speed * Time.deltaTime);
+                transform.Rotate(Vector3.back * ReloadSpeed * Time.deltaTime);
 
                 // lockChildRotation이 true이면, 모든 자식 Bullet의 회전을 월드 기본값(Quaternion.identity)으로 고정합니다.
                 if (lockChildRotation)
@@ -83,7 +83,7 @@ public class Weapon : MonoBehaviour
                 timer += Time.deltaTime;
 
                 // 타이머가 speed 값보다 커지면, 타이머를 초기화하고 Fire() 함수를 호출하여 Bullet을 발사합니다.
-                if (timer > speed)
+                if (timer > ReloadSpeed)
                 {
                     timer = 0f;
                     Fire();
@@ -110,7 +110,7 @@ public class Weapon : MonoBehaviour
         // 무기 id가 0인 경우, Bullet 배치(Batch) 함수를 호출하여 화면의 Bullet 배치를 업데이트합니다.
         if (id == 0)
         {
-            Batch();
+            CircleSkill();
         }
     }
 
@@ -120,19 +120,16 @@ public class Weapon : MonoBehaviour
         switch (id)
         {
             case 0:
-                // id가 0인 경우: 회전 속도를 -150으로 설정하고 Bullet 배치를 초기화합니다.
-                speed = -150;
-                Batch();
+                CircleSkill();
                 break;
             default:
-                // 그 외의 경우: 기본 회전/발사 속도를 0.3f로 설정합니다.
-                speed = 0.3f;
+
                 break;
         }
     }
 
     // Batch 함수: 현재 count 값만큼 Bullet을 생성하고, 원형으로 배치합니다.
-    void Batch()
+    void CircleSkill()
     {
         // count만큼 반복하여 각 Bullet의 생성 및 배치를 수행합니다.
         for (int index = 0; index < count; index++)
