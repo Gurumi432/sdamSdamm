@@ -60,6 +60,11 @@ public class Enemy : MonoBehaviour
         target = GameManager.instance.player.GetComponent<Rigidbody2D>();
         isLive = true;
         health = maxHealth;
+        coll.enabled = true;
+        rigid.simulated = true;
+        spriter.soringOrder = 2;
+        anim.SetBool("Dead", false);
+        health = maxHealth;
     }
 
     public void Init(SpawnData data)
@@ -80,11 +85,17 @@ public class Enemy : MonoBehaviour
         {
             // 애니메이션과 넉백 효과를 각각 독립적으로 처리
             StartCoroutine(HitAnimationReaction());
-            StartCoroutine(HitKnockbackReaction());
+            StartCoroutine(Knockback());
         }
         else
         {
+            isLive = false;
+            coll.enabled = false;
+            rigid.simulated = false;
+            spriter.sortingOrder = 1;
+            anim.SetBool("Dead",true);
             Dead();
+            health = maxhealth;
         }
     }
 
@@ -94,11 +105,11 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("Hit");
         // 별도로 대기할 필요가 없다면 hitAnimationDuration 제거 가능
         // 애니메이션 클립의 길이에 맞춰 자연스럽게 재생됨
-        yield return new WaitForSeconds(hitAnimationDuration);
+        yield return new W aitForSeconds(hitAnimationDuration);
     }
 
     // 넉백 전용 코루틴
-    IEnumerator HitKnockbackReaction()
+    IEnumerator Knockback()
     {
         isKnockBack = true;
         yield return wait; // 물리 업데이트와 동기화
