@@ -271,3 +271,5 @@ MonoBehaviour:
   animCon:
   - {fileID: 9100000, guid: c9b25f8807a97f346a693a4d50842dcf, type: 2}
   target: {fileID: 0}
+  knockBackDuration: 0.15
+  hitAnimationDuration: 0.3

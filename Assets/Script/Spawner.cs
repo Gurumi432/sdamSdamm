@@ -76,7 +76,7 @@ public class Spawner : MonoBehaviour
 [System.Serializable]
 public class SpawnData
 {
-    public int spriteType;
+    public int AnimType;
     public float spawnTime;
     public int health;
     public float speed;

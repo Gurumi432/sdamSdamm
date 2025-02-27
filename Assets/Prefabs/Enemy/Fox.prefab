@@ -187,6 +187,8 @@ MonoBehaviour:
   animCon:
   - {fileID: 9100000, guid: d3345ed46597261469c3170af86d2e0e, type: 2}
   target: {fileID: 0}
+  knockBackDuration: 0.15
+  hitAnimationDuration: 0.3
 --- !u!1 &6761909987981926043
 GameObject:
   m_ObjectHideFlags: 0

@@ -18519,29 +18519,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: []
   spawnData:
-  - spriteType: 0
+  - AnimType: 0
     spawnTime: 1
     health: 10
     speed: 1.5
-  - spriteType: 0
+  - AnimType: 0
     spawnTime: 1
     health: 10
     speed: 1.5
-  - spriteType: 0
+  - AnimType: 0
     spawnTime: 1
     health: 10
     speed: 1.5
-  - spriteType: 0
+  - AnimType: 0
     spawnTime: 1
     health: 10
     speed: 1.5
-  - spriteType: 0
+  - AnimType: 0
     spawnTime: 1
     health: 10
     speed: 1.5
-  - spriteType: 0
-    spawnTime: 1
-    health: 10
+  - AnimType: 0
+    spawnTime: 10
+    health: 50
     speed: 1.5
 --- !u!1 &2035911753
 GameObject:
