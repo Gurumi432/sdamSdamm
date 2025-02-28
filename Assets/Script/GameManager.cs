@@ -22,11 +22,17 @@ public class GameManager : MonoBehaviour
 {
     // GameManager 클래스의 유일한 인스턴스를 저장하기 위한 정적 변수 (싱글톤)
     public static GameManager instance;
-    // 게임 내 플레이어 객체에 대한 참조
+    [Header("# Game Control")]
     public float gameTime;
+    public float maxGameTime = 2 * 10f;
+    [Header("# Player Info")]
+    public int level;
+    public int kill;
+    public int exp;
+    public int[] nextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    [Header("# Game Object")]
     public Player player;
     public PoolManager pool;
-    public float maxGameTime = 2 * 10f;
 
     // Awake()는 MonoBehaviour가 활성화될 때 가장 먼저 호출되는 메서드입니다.
     void Awake()
@@ -44,6 +50,17 @@ public class GameManager : MonoBehaviour
         {
             gameTime = maxGameTime;
 
+        }
+    }
+
+    public void GetExp()
+    {
+        exp++;
+
+        if (exp == nextExp[level])
+        {
+            level++;
+            exp = 0;
         }
     }
 }

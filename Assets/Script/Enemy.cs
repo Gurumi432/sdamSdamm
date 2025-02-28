@@ -19,16 +19,19 @@ public class Enemy : MonoBehaviour
     SpriteRenderer spriter;
     Animator anim;
     WaitForFixedUpdate wait;
+    Collider2D coll;
 
     [Header("KnockBack / Hit Animation Settings")]
     public float knockBackDuration = 0.2f;    // 넉백 효과 지속시간
-    public float hitAnimationDuration = 0.5f;   // 애니메이션 노출 지속시간
+    public float hitAnimationDuration = 0.5f;   // 히트 애니메이션 지속시간
+    public float deadAnimationDuration = 1.0f;  // Dead 애니메이션 재생 시간
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
         wait = new WaitForFixedUpdate();
     }
 
@@ -62,7 +65,7 @@ public class Enemy : MonoBehaviour
         health = maxHealth;
         coll.enabled = true;
         rigid.simulated = true;
-        spriter.soringOrder = 2;
+        spriter.sortingOrder = 2;
         anim.SetBool("Dead", false);
         health = maxHealth;
     }
@@ -77,13 +80,13 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Bullet"))
+        if (!collision.CompareTag("Bullet") || !isLive)
             return;
 
         health -= collision.GetComponent<Bullet>().damage;
         if (health > 0)
         {
-            // 애니메이션과 넉백 효과를 각각 독립적으로 처리
+            // 히트 애니메이션과 넉백 효과를 각각 독립적으로 처리
             StartCoroutine(HitAnimationReaction());
             StartCoroutine(Knockback());
         }
@@ -93,19 +96,19 @@ public class Enemy : MonoBehaviour
             coll.enabled = false;
             rigid.simulated = false;
             spriter.sortingOrder = 1;
-            anim.SetBool("Dead",true);
-            Dead();
-            health = maxhealth;
+            anim.SetBool("Dead", true);
+            // Dead 애니메이션이 재생될 시간을 기다린 후에 비활성화
+            GameManager.instance.kill++;
+            StartCoroutine(DeadAnimationCoroutine());
+            GameManager.instance.GetExp();
         }
     }
 
-    // 애니메이션 전용 코루틴 (Trigger 방식 사용)
+    // 히트 애니메이션 전용 코루틴
     IEnumerator HitAnimationReaction()
     {
         anim.SetTrigger("Hit");
-        // 별도로 대기할 필요가 없다면 hitAnimationDuration 제거 가능
-        // 애니메이션 클립의 길이에 맞춰 자연스럽게 재생됨
-        yield return new W aitForSeconds(hitAnimationDuration);
+        yield return new WaitForSeconds(hitAnimationDuration);
     }
 
     // 넉백 전용 코루틴
@@ -114,7 +117,6 @@ public class Enemy : MonoBehaviour
         isKnockBack = true;
         yield return wait; // 물리 업데이트와 동기화
 
-        // 플레이어 반대 방향으로 넉백 처리
         Vector3 playerPos = GameManager.instance.player.transform.position;
         Vector3 dirVec = transform.position - playerPos;
         rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
@@ -123,8 +125,10 @@ public class Enemy : MonoBehaviour
         isKnockBack = false;
     }
 
-    void Dead()
+    // Dead 애니메이션이 끝난 후에 게임 오브젝트를 비활성화하는 코루틴
+    IEnumerator DeadAnimationCoroutine()
     {
+        yield return new WaitForSeconds(deadAnimationDuration);
         gameObject.SetActive(false);
     }
 }
