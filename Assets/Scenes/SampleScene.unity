@@ -5403,7 +5403,7 @@ GameObject:
   - component: {fileID: 1058943856}
   - component: {fileID: 1058943855}
   m_Layer: 5
-  m_Name: Score Text
+  m_Name: Kill Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9868,7 +9868,7 @@ GameObject:
   - component: {fileID: 1204692724}
   - component: {fileID: 1204692723}
   m_Layer: 5
-  m_Name: Score
+  m_Name: Kill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9892,7 +9892,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 4.7, y: -14}
+  m_AnchoredPosition: {x: 4.700012, y: -14}
   m_SizeDelta: {x: 10.133331, y: 10.53334}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1204692723
