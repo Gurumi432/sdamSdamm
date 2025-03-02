@@ -14665,6 +14665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1577770955}
+  - component: {fileID: 1577770956}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -14693,6 +14694,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 13, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1577770956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577770954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a474f5bd31293f4a8126894c36132df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1584987105
 GameObject:
   m_ObjectHideFlags: 0
