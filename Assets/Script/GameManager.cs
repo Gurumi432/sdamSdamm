@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public int exp;
     public int[] nextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
     [Header("# Game Object")]
-    public Player player;
+    public Player player; // Player라는 스크립트를 컴포넌트로 가진 오브젝트를 할당 받기 (유저가 직접 인스펙터 상에서 삽입)
     public PoolManager pool;
 
     // Awake()는 MonoBehaviour가 활성화될 때 가장 먼저 호출되는 메서드입니다.
