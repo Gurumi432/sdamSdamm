@@ -1,5 +1,6 @@
 using System.Collections;                     // 컬렉션 관련 기능 사용
 using System.Collections.Generic;             // 제네릭 컬렉션 사용
+
 using UnityEngine;                            // Unity 엔진 기본 기능 사용
 using UnityEngine.UI;                         // Unity UI 관련 기능 사용
 
@@ -19,6 +20,7 @@ public class HUD : MonoBehaviour             // HUD 클래스: MonoBehaviour를 상속
         mySlider = GetComponent<Slider>(); // 자기 자신의 Slider 컴포넌트를 가져와 mySlider에 할당
     }
 
+
     void LateUpdate()
     {
         switch (type)
@@ -33,7 +35,7 @@ public class HUD : MonoBehaviour             // HUD 클래스: MonoBehaviour를 상속
             case InfoType.Level:  // 레벨 정보 표시인 경우
                 myText.text = string.Format("Lv.{0:F0}", GameManager.instance.level);
                 // 텍스트에 현재 레벨 값을 정수 형태로 포맷하여 표시 ({}은 인수를 넣을 위치를 지정,0은 첫번째 인덱스, F0은 소수점이하 0자리까지 표시)
-                break;
+                break;     
 
             case InfoType.Kill:  // 킬 수 정보 표시인 경우
                 myText.text = string.Format("{0:F0}", GameManager.instance.kill);
@@ -48,7 +50,10 @@ public class HUD : MonoBehaviour             // HUD 클래스: MonoBehaviour를 상속
                 break;
 
             case InfoType.Health:  // 체력 정보 표시인 경우
-                // 체력 관련 업데이트 로직 추가 필요
+                float curHealth = GameManager.instance.health; //변수 초기화
+                // 다음 레벨까지 필요한 최대 경험치 값을 GameManager에서 현재 레벨에 맞게 가져옴
+                float maxHealth = GameManager.instance.maxHealth;
+                mySlider.value = curHealth / maxHealth;
                 break;
         }
     }

@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     public float maxGameTime = 2 * 10f;
     [Header("# Player Info")]
     public int level;
+    public int health;
+    public int maxhealth = 100;
+    public int maxHealth = 1;
     public int kill;
     public int exp;
     public int[] nextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
@@ -39,6 +42,12 @@ public class GameManager : MonoBehaviour
     {
         // 싱글톤 패턴 구현: 현재 인스턴스를 전역에서 접근 가능한 instance 변수에 할당합니다.
         instance = this;
+    }
+
+
+    void Start()
+    {
+        health = maxHealth;
     }
 
 
