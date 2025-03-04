@@ -1,9 +1,11 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Item : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class Item : MonoBehaviour
     public Weapon weapon;
 
     Image icon;
-    Text textlevel;
+    Text textLevel;
 
     void Awake()
     {
@@ -20,12 +22,12 @@ public class Item : MonoBehaviour
         icon.sprite = data.itemIcon;
 
         Text[] texts = GetComponentsInChildren<Text>();
-        textlevel = texts[0];
+        textLevel = texts[0];
     }
 
     void LateUpdate()
     {
-        textlevel.text = "Lv." + (level + 1);
+        textLevel.text = "Lv." + (level + 1);
     }
 
     public void OnClick()
@@ -33,6 +35,21 @@ public class Item : MonoBehaviour
         switch (data.itemType) {
             case ItemData.ItemType.Melee:
             case ItemData.ItemType.Range:
+                if (level == 0) {
+                    GameObject newWeapon = new GameObject();
+                    weapon = newWeapon.AddComponent<Weapon>();
+                    weapon.Init(data);
+                }
+                else
+                {
+                    float nextDamage = data.baseDamage;
+                    int nextCount = 0;
+
+                    nextDamage += data.baseDamage * data.damages[level];
+                    nextCount += data.counts[level];
+
+                    weapon.LevelUp(nextDamage, nextCount);
+                }
                 break;
             case ItemData.ItemType.Glove:
                 break;
