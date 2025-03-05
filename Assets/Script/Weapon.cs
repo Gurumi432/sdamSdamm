@@ -23,10 +23,11 @@ public class Weapon : MonoBehaviour
     public int prefabId;
     // 무기의 공격력(데미지) 값
     public float damage;
+
     // 생성할 총알(Bullet)의 개수
     public int count;
     // 무기의 발사 또는 회전 속도를 제어하는 변수 (ReloadSpeed가 클수록 동작 주기가 느려집니다)
-    public float ReloadSpeed;
+    public float speed;
     // 자식 총알의 회전 잠금 여부:
     // true이면 자식 총알이 부모의 회전과 무관하게 월드 기준 회전(Quaternion.identity)을 유지
     public bool lockChildRotation = true;
@@ -43,6 +44,24 @@ public class Weapon : MonoBehaviour
         player = GameManager.instance.player;
     }
 
+    void Start()
+    {
+        switch (id)
+        {
+            // id가 0인 경우: 원형 배치 무기 로직 적용
+            case 0:
+                // 무기(부모 오브젝트)를 Vector3.back 방향으로 회전시켜 원형 배치 효과를 만듭니다.
+                // 회전 속도는 ReloadSpeed와 Time.deltaTime을 곱해 부드러운 회전을 구현합니다.
+                speed = 150;
+                break;
+            default:
+                speed = 0.5F;
+                break;
+        }
+
+
+    }
+
     // Update 함수: 매 프레임마다 호출되어 무기의 동작을 처리합니다.
     void Update()
     {
@@ -53,8 +72,7 @@ public class Weapon : MonoBehaviour
             case 0:
                 // 무기(부모 오브젝트)를 Vector3.back 방향으로 회전시켜 원형 배치 효과를 만듭니다.
                 // 회전 속도는 ReloadSpeed와 Time.deltaTime을 곱해 부드러운 회전을 구현합니다.
-                ReloadSpeed = -150;
-                transform.Rotate(Vector3.back * ReloadSpeed * Time.deltaTime);
+                transform.Rotate(Vector3.back * speed * Time.deltaTime);
 
                 // 자식 총알의 회전을 고정하여 부모의 회전에 영향을 받지 않도록 합니다.
                 if (lockChildRotation)
@@ -67,12 +85,11 @@ public class Weapon : MonoBehaviour
                 break;
             // 그 외 무기 id의 경우: 타이머를 이용해 일정 주기마다 발사(Fire) 동작 수행
             default:
-                ReloadSpeed = 0.5F;
                 // 지난 프레임의 경과 시간을 누적하여 타이머를 증가시킵니다.
                 timer += Time.deltaTime;
 
                 // 타이머 값이 ReloadSpeed보다 커지면 발사 동작을 수행합니다.
-                if (timer > ReloadSpeed)
+                if (timer > speed)
                 {
                     timer = 0f;
                     Fire();
@@ -80,13 +97,7 @@ public class Weapon : MonoBehaviour
                 break;
         }
 
-        // ── 테스트 코드 ──
-        // "Jump" 버튼 입력 시 무기 레벨업(LevelUp)을 테스트합니다.
-        // 데미지를 10 증가시키고 총알 수를 1 증가시킵니다.
-        if (Input.GetButtonDown("Jump"))
-        {
-            LevelUp(10, 1);
-        }
+
     }
 
     // LevelUp 함수: 외부에서 호출하여 무기의 레벨업 효과를 적용합니다.
@@ -101,9 +112,8 @@ public class Weapon : MonoBehaviour
 
         // 무기가 원형 배치 무기(id 0)라면, 새롭게 Bullet 배치를 갱신합니다.
         if (id == 0)
-        {
             CircleSkill();
-        }
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     // Init 함수: 외부(ItemData)를 받아 무기를 초기화합니다.
@@ -144,6 +154,8 @@ public class Weapon : MonoBehaviour
                 // 다른 무기 타입에 대해 필요한 초기화 로직을 추가할 수 있습니다.
                 break;
         }
+
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     // CircleSkill 함수: 현재 count 값에 맞춰 총알(Bullet)을 원형으로 배치합니다.
