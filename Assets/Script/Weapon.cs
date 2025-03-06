@@ -17,6 +17,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    ItemData data;
     // 무기의 고유 식별자: 각 무기의 종류를 구분하기 위한 변수입니다.
     public int id;
     // 풀 시스템에서 사용할 프리팹의 인덱스 값
@@ -97,7 +98,9 @@ public class Weapon : MonoBehaviour
                 break;
         }
 
-        Hand hand
+        Hand hand = player.hands[(int)data.itemType];
+        hand.spriter.sprite = data.hand;
+        hand.gameObject.SetActive(true);
 
         player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
