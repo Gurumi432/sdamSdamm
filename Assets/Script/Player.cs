@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
     // 플레이어의 이동 속도
     public float speed;
     public Scanner scanner;
+    public Hand[] hands;
+
 
 
     // 물리 계산을 위한 Rigidbody2D 컴포넌트
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
         // Animator 컴포넌트를 가져옵니다.
         anim = GetComponent<Animator>();
         scanner = GetComponent<Scanner>();
+        hands = GetComponentsInChildren<Hand>(true);
     }
 
     // 매 프레임 호출되며 입력값을 업데이트합니다.

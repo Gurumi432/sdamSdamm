@@ -69,14 +69,14 @@ public class Item : MonoBehaviour                // Item 클래스 선언 (MonoBehavi
                     float nextRate = data.damages[level];       // 레벨 기반 gear 효과율 계산
                     gear.LevelUp(nextRate);                     // gear 레벨업 메서드 호출
                 }
-                break;                          // 글러브/슈즈 아이템 케이스 종료
                 level++;
+                break;                          // 글러브/슈즈 아이템 케이스 종료
+                
             case ItemData.ItemType.Heal:        // 회복 아이템 타입 처리 (미구현)
                 GameManager.instance.health = GameManager.instance.maxHealth;
                 break;                          // Heal 케이스 종료
         }
 
-        level++;                                // 아이템 레벨 증가
 
         if (level == data.damages.Length)
         {     // 최대 레벨 도달 시

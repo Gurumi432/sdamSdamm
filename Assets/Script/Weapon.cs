@@ -97,7 +97,9 @@ public class Weapon : MonoBehaviour
                 break;
         }
 
+        Hand hand
 
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     // LevelUp 함수: 외부에서 호출하여 무기의 레벨업 효과를 적용합니다.
@@ -113,6 +115,11 @@ public class Weapon : MonoBehaviour
         // 무기가 원형 배치 무기(id 0)라면, 새롭게 Bullet 배치를 갱신합니다.
         if (id == 0)
             CircleSkill();
+
+        Hand hand = player.hands[(int)data.itemType];
+        hand.spriter.sprite = data.hand;
+        hand.gameObject.SetActive(true);
+
         player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
